@@ -1,0 +1,236 @@
+package com.pri.converter;
+
+
+
+import com.jspiders.helloworld.R;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity implements OnClickListener 
+{
+
+	TextView converterselected;
+	Spinner convertoptionsspinner;
+	EditText enteredval1, enteredval2;
+	Button submitbutton, cancelbutton;
+	int position;
+	String[] spinneroption;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) 
+    {
+    	final String[] options = {"Temperature: degree to farenheit","Temperature: farenheit to degree",
+    			"Length: meter to millimeter","Length: millimeter to meter",
+    			"Currency: rupees to dollars","Currency: dollars to rupees"};
+    	spinneroption = options;
+        
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        /*Spinner creation and dynamically showing the selected option from the spinner*/
+        convertoptionsspinner = (Spinner) findViewById(R.id.spinnerconvertoptions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_dropdown_item_1line,options);
+        convertoptionsspinner.setAdapter(adapter);
+        
+        /*entering the values*/
+        enteredval1 = (EditText) findViewById(R.id.entvalue1);
+        enteredval2 = (EditText) findViewById(R.id.entvalue2);
+        
+        convertoptionsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
+				converterselected.setText("Converter selected "+options[arg2]);
+				position = arg2;
+				
+				if(options[arg2]==options[0])
+				{
+					enteredval1.setHint("degree");
+					enteredval2.setHint("farenheit");
+				}else if(options[arg2]==options[1])
+				{
+					enteredval1.setHint("farenheit");
+					enteredval2.setHint("degree");
+				}else if(options[arg2]==options[2])
+				{
+					enteredval1.setHint("meter");
+					enteredval2.setHint("millimeter");
+				}else if(options[arg2]==options[3])
+				{
+					enteredval1.setHint("millimeter");
+					enteredval2.setHint("meter");
+				}else if(options[arg2]==options[4])
+				{
+					enteredval1.setHint("rupees");
+					enteredval2.setHint("dollars");
+				}else if(options[arg2]==options[5])
+				{
+					enteredval1.setHint("dollars");
+					enteredval2.setHint("rupees");
+				}
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+        converterselected = (TextView) findViewById(R.id.selectedconverter);
+        
+        
+        /*button widget*/
+        submitbutton = (Button) findViewById(R.id.buttonsubmit);
+        submitbutton.setOnClickListener(this);
+        cancelbutton = (Button) findViewById(R.id.buttoncancel);
+        cancelbutton.setOnClickListener(this);
+        
+        
+    }
+    public void degtofar()
+    {
+    	double Celsius;
+		String Fahrenheit;
+		String celciusval;
+		
+		celciusval = enteredval1.getText().toString();
+		double d1 = new Double(celciusval);
+		double fahrenheitval = ((9 * d1)/5) + 32;
+		Fahrenheit = Double.toString(fahrenheitval);
+		
+		enteredval2.setText(Fahrenheit);
+    }
+    public void fartodeg()
+    {
+    	String Celsius;
+		double Fahrenheit;
+		String fahrenheitval;
+		
+		fahrenheitval = enteredval1.getText().toString();
+		double d2 = new Double(fahrenheitval);
+    	double celsiusval = (5/9) * (d2-32);
+    	Celsius = Double.toString(celsiusval);
+    	
+    	
+    	enteredval2.setText(Celsius);
+    }
+    public void mettomil()
+    {
+    	double meter;
+    	String millimeter;
+    	String entmeter;
+    	
+    	entmeter = enteredval1.getText().toString();
+    	double d3 = new Double(entmeter);
+    	double calcmilli = d3 * 1000;
+    	millimeter = Double.toString(calcmilli);
+    	
+    	enteredval2.setText(millimeter);
+    }
+    public void miltomet()
+    {
+    	String meter;
+    	double millimeter;
+    	String entmilli;
+    	
+    	entmilli = enteredval1.getText().toString();
+    	double d4 = new Double(entmilli);
+    	double calcmet = d4 / 1000;
+    	meter = Double.toString(calcmet);
+    	
+    	enteredval2.setText(meter);
+    	
+    }
+    public void ruptodol()
+    {
+    	double rupees;
+    	String dollars;
+    	String entrupees;
+    	
+    	entrupees = enteredval1.getText().toString();
+    	double d5 = new Double(entrupees);
+    	double calcdol = d5 / 66.19;
+    	dollars = Double.toString(calcdol);
+    	
+    	enteredval2.setText(dollars);
+    }
+    public void doltorup()
+    {
+    	String rupees;
+    	double dollars;
+    	String entdollars;
+    	
+    	entdollars = enteredval1.getText().toString();
+    	double d6 = new Double(entdollars);
+    	double calcrup = d6 * 66.19;
+    	rupees = Double.toString(calcrup);
+    	
+    	enteredval2.setText(rupees);
+    	
+    }
+    
+	@Override
+	public void onClick(View v) 
+	{
+     switch (v.getId()) {
+		
+		case R.id.buttonsubmit:
+			
+			if(spinneroption[position]==spinneroption[0])
+			{
+				degtofar();
+			}else if(spinneroption[position]==spinneroption[1])
+			{
+				fartodeg();
+			}else if(spinneroption[position]==spinneroption[2])
+			{
+				mettomil();
+			}else if(spinneroption[position]==spinneroption[3])
+			{
+				miltomet();
+			}else if(spinneroption[position]==spinneroption[4])
+			{
+				ruptodol();
+			}else if(spinneroption[position]==spinneroption[0])
+			{
+				doltorup();
+			}
+		
+			
+			break;
+
+		case R.id.buttoncancel: 
+			
+			enteredval1.setText("");
+			enteredval2.setText("");
+			
+			break;
+		
+		
+		default:
+			break;
+		}
+		
+		
+		
+		
+	}
+
+
+    
+    
+}

@@ -1,0 +1,62 @@
+package com.pri.converter;
+
+
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class MainActivity extends Activity 
+{
+
+	TextView converterselected;
+	Spinner convertoptionsspinner;
+	EditText enteredval1, enteredval2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) 
+    {
+    	final String[] options = {"Temperature: degree to farenheit","Temperature: farenheit to degree","Length: meter to millimeter","Length: millimeter to meter","Currency: rupees to dollars","Currency: dollars to rupees"};
+        
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        /*Spinner creation and dynamically showing the selected option from the spinner*/
+        convertoptionsspinner = (Spinner) findViewById(R.id.spinnerconvertoptions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_dropdown_item_1line,options);
+        convertoptionsspinner.setAdapter(adapter);
+        
+        convertoptionsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
+				converterselected.setText("Converter selected "+options[arg2]);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+
+        converterselected = (TextView) findViewById(R.id.selectedconverter);
+        
+        /*entering the values*/
+        enteredval1 = (EditText) findViewById(R.id.entvalue1);
+        enteredval2 = (EditText) findViewById(R.id.entvalue2);
+        
+        
+    }
+
+
+    
+    
+}

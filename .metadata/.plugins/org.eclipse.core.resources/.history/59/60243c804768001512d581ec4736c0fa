@@ -1,0 +1,37 @@
+package com.pri.intents;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends Activity implements OnClickListener {
+	TextView msgtextView;
+	Button nextpagebutton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        msgtextView =(TextView) findViewById(R.id.textViewmsg);
+        nextpagebutton = (Button) findViewById(R.id.buttonnextpage);
+        
+        nextpagebutton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) 
+			{
+				Intent i1 = new Intent(MainActivity.this,Second.class);
+				i1.putExtra("key1", "hello pri");
+				
+			}
+		});
+    }
+
+
+}

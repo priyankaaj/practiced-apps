@@ -1,0 +1,136 @@
+package com.pri.converter;
+
+
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class MainActivity extends Activity implements OnClickListener 
+{
+
+	TextView converterselected;
+	Spinner convertoptionsspinner;
+	EditText enteredval1, enteredval2;
+	Button submitbutton;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) 
+    {
+    	final String[] options = {"Temperature: degree to farenheit","Temperature: farenheit to degree",
+    			"Length: meter to millimeter","Length: millimeter to meter",
+    			"Currency: rupees to dollars","Currency: dollars to rupees"};
+        
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        /*Spinner creation and dynamically showing the selected option from the spinner*/
+        convertoptionsspinner = (Spinner) findViewById(R.id.spinnerconvertoptions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_dropdown_item_1line,options);
+        convertoptionsspinner.setAdapter(adapter);
+        
+        /*entering the values*/
+        enteredval1 = (EditText) findViewById(R.id.entvalue1);
+        enteredval2 = (EditText) findViewById(R.id.entvalue2);
+        
+        convertoptionsspinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
+				converterselected.setText("Converter selected "+options[arg2]);
+				
+				if(options[arg2]==options[0])
+				{
+					enteredval1.setHint("degree");
+					enteredval2.setHint("farenheit");
+				}else if(options[arg2]==options[1])
+				{
+					enteredval1.setHint("farenheit");
+					enteredval2.setHint("degree");
+				}else if(options[arg2]==options[2])
+				{
+					enteredval1.setHint("meter");
+					enteredval2.setHint("millimeter");
+				}else if(options[arg2]==options[3])
+				{
+					enteredval1.setHint("millimeter");
+					enteredval2.setHint("meter");
+				}else if(options[arg2]==options[4])
+				{
+					enteredval1.setHint("rupees");
+					enteredval2.setHint("dollars");
+				}else if(options[arg2]==options[5])
+				{
+					enteredval1.setHint("dollars");
+					enteredval2.setHint("rupees");
+				}
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) 
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
+        converterselected = (TextView) findViewById(R.id.selectedconverter);
+        
+        
+        /*button widget*/
+        submitbutton = (Button) findViewById(R.id.buttonsubmit);
+        submitbutton.setOnClickListener(this);
+        
+        
+        
+    }
+    public void degtofar()
+    {
+    	double Celsius;
+		String Fahrenheit;
+		String celciusval;
+		
+		celciusval = enteredval1.getText().toString();
+		double d1 = new Double(celciusval);
+		double fahrenheitval = (9/5) * d1 + 32;
+		Fahrenheit = fahrenheitval.toString();
+    }
+    public void fartodeg()
+    {
+    	
+    }
+    public void mettomil()
+    {
+    	
+    }
+    public void miltomet()
+    {
+    	
+    }
+    public void ruptodol()
+    {
+    	
+    }
+    public void doltorup()
+    {
+    	
+    }
+	@Override
+	public void onClick(View arg0) 
+	{
+		
+		
+	}
+
+
+    
+    
+}
